@@ -1,0 +1,57 @@
+{% extends 'layouts/base.html' %}
+
+{% set page_title = "Sign In" %}
+
+{% block container %}
+    <div class="row">
+        <div class="main-login main-center">
+            <h3>Sign In</h3>
+            <form id="signinForm" class="form-horizontal" method="post" role="form"
+                  action="{{ url_for('bro.signin') }}">
+                {{ form.csrf_token }}
+                <div class="form-group {% if form.email.errors %} has-error {% endif %}">
+                    {{ form.email.label(class_="cols-sm-2 control-label") }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user fa" aria-hidden="true"></i>
+                                </span>
+                            {{ form.email(placeholder="Enter your Email", class_="form-control") }}
+                        </div>
+                    </div>
+                    {% for error in form.email.errors %}
+                        <p class="help-block">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div class="form-group {% if form.password.errors %} has-error {% endif %}">
+                    {{ form.password.label(class_="cols-sm-2 control-label") }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-lock fa" aria-hidden="true"></i>
+                                </span>
+                            {{ form.password(placeholder="Enter your Password", class_="form-control") }}
+                        </div>
+                    </div>
+                    {% for error in form.password.errors %}
+                        <p class="help-block">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            {{ form.remember(class_="") }}
+                            {{ form.remember.label.text | e }}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <button type="submit" class="btn btn-primary btn-block login-button">Sign In</button>
+                </div>
+                <div class="login-register">
+                    <a href="{{ url_for('bro.signup') }}">Sign Up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

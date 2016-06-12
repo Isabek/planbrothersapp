@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from base import Base
-from main.extensions import db, migrate
+from main.extensions import db, migrate, csrf_protect, login_manager
 
 
 class App(Base):
@@ -10,3 +10,8 @@ class App(Base):
 
     def configure_extensions(self):
         migrate.init_app(self, db)
+        csrf_protect.init_app(self)
+
+    def configure_login_manager(self):
+        login_manager.init_app(self)
+        login_manager.login_view = 'bro.signin'

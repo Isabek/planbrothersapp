@@ -6,13 +6,14 @@ from main import config
 from main.app import App
 from frontend.views import frontend
 from flask_migrate import MigrateCommand
+from bro.views import bro
 
 
 def app_factory(conf, app_name):
     app = App(app_name)
     app.configure(conf)
     app.secret_key = os.urandom(24)
-    app.add_blueprint_list((frontend,))
+    app.add_blueprint_list((frontend, bro,))
     app.setup()
     return app
 

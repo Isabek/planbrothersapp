@@ -1,0 +1,105 @@
+{% extends 'layouts/base.html' %}
+
+{% set page_title = "Sign Up" %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker3.min.css') }}">
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="main-login main-center">
+            <h3>Sign Up</h3>
+            <form class="form-horizontal" method="post" action="{{ url_for('bro.signup') }}">
+                {{ form.csrf_token }}
+                <div class="form-group {% if form.username.errors %} has-error {% endif %}">
+                    {{ form.username.label(class_="cols-sm-2 control-label") }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            {{ form.username(placeholder="Enter your Username", class_="form-control") }}
+                        </div>
+                    </div>
+                    {% for error in form.username.errors %}
+                        <p class="help-block">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div class="form-group {% if form.email.errors %} has-error {% endif %}">
+                    {{ form.email.label(class_="cols-sm-2 control-label") }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-envelope fa" aria-hidden="true"></i>
+                                </span>
+                            {{ form.email(placeholder="Enter your Email", class_="form-control") }}
+                        </div>
+                        {% for error in form.email.errors %}
+                            <p class="help-block">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group {% if form.birthdate.errors %} has-error {% endif %}">
+                    {{ form.birthdate.label(class_="cols-sm-2 control-label") }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar fa" aria-hidden="true"></i>
+                                </span>
+                            {{ form.birthdate(placeholder="Select your Birthday", class_="form-control", id='birthdate') }}
+                        </div>
+                        {% for error in form.birthdate.errors %}
+                            <p class="help-block">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group {% if form.password.errors %} has-error {% endif %}">
+                    {{ form.password.label(class_="cols-sm-2 control-label") }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+                                </span>
+                            {{ form.password(placeholder="Enter your Password", class_="form-control") }}
+                        </div>
+                        {% for error in form.password.errors %}
+                            <p class="help-block">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group {% if form.confirm.errors %} has-error {% endif %}">
+                    {{ form.confirm.label(class_="cols-sm-2 control-label") }}
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+                                </span>
+                            {{ form.confirm(placeholder="Confirm your Password", class_="form-control") }}
+                        </div>
+                        {% for error in form.confirm.errors %}
+                            <p class="help-block">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block login-button">Sign Up</button>
+                </div>
+                <div class="login-register">
+                    <a href="{{ url_for('bro.signin') }}">Sign In</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('#birthdate').datepicker({
+                endDate: '-10y'
+            });
+        });
+    </script>
+{% endblock %}

@@ -17,6 +17,7 @@ class Base(Flask):
         self.configure_error_handlers()
         self.configure_database()
         self.configure_extensions()
+        self.configure_login_manager()
 
     def configure_error_handlers(self):
         pass
@@ -25,4 +26,7 @@ class Base(Flask):
         pass
 
     def configure_extensions(self):
+        pass
+
+    def configure_login_manager(self):
         pass
