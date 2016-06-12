@@ -42,3 +42,8 @@ class SignUpForm(Form):
     def _get_bro_by_email(email):
         bro = Bro.query.filter_by(email=email).first()
         return bro
+
+
+class DeleteForm(Form):
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)

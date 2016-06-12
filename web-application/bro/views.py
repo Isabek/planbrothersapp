@@ -1,4 +1,4 @@
-from bro.forms import SignInForm, SignUpForm
+from bro.forms import SignInForm, SignUpForm, DeleteForm
 from bro.models import Bro
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
@@ -62,3 +62,15 @@ def edit_profile():
         db.session.commit()
         flash("You profile has been successfully updated.", "info")
     return render_template('bro/edit_profile.html', form=form)
+
+
+@bro.route("/profile/delete", methods=['GET', 'POST'])
+@login_required
+def delete_profile():
+    form = DeleteForm()
+    if request.method == "POST":
+        db.session.delete(current_user)
+        db.session.commit()
+        flash("You profile has been successfully deleted", "info")
+        return redirect(url_for('frontend.index'))
+    return render_template('bro/delete_profile.html', form=form)
