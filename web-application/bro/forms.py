@@ -1,3 +1,4 @@
+from bro.models import Bro
 from flask_wtf import Form
 from wtforms import PasswordField, StringField, DateField, BooleanField
 from wtforms.validators import InputRequired, DataRequired, Email, EqualTo
@@ -21,3 +22,23 @@ class SignUpForm(Form):
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
+
+    def validate_for_exist(self, current_bro=None):
+        rv = Form.validate(self)
+        if not rv:
+            return False
+
+        if not current_bro and self._get_bro_by_email(self.email.data):
+            self.email.errors.append("Bro with this email exists")
+            return False
+
+        bro = self._get_bro_by_email(self.email.data)
+        if bro and current_bro and bro.get_id() != current_bro.get_id():
+            self.email.errors.append("Bro with this email exists")
+            return False
+        return True
+
+    @staticmethod
+    def _get_bro_by_email(email):
+        bro = Bro.query.filter_by(email=email).first()
+        return bro

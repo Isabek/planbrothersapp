@@ -26,7 +26,7 @@ class Bro(db.Model, UserMixin):
 
     def __init__(self, username, password, email, birthdate):
         self.username = username
-        self._set_password(password)
+        self.password = password
         self.email = email
         self.birthdate = birthdate
         self.registered_on = datetime.utcnow()
@@ -35,6 +35,7 @@ class Bro(db.Model, UserMixin):
     def password(self):
         return self._password
 
+    @password.setter
     def _set_password(self, plaintext):
         self._password = generate_password_hash(plaintext, BCRYPT_LOG_ROUNDS)
 

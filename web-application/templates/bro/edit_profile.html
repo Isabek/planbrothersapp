@@ -1,0 +1,93 @@
+{% extends 'layouts/base.html' %}
+
+{% set page_title = "Edit Profile" %}
+
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datepicker3.min.css') }}">
+{% endblock %}
+
+
+{% block container %}
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='images/no-user.jpg') }}"
+                     class="avatar img-circle img-thumbnail" alt="avatar">
+                <h6>Your profile photo</h6>
+            </div>
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <div class="col-md-12">
+                <form class="form-horizontal" method="post" action="{{ url_for('bro.edit_profile') }}" role="form">
+                    {{ form.csrf_token }}
+                    <div class="form-group {% if form.username.errors %} has-error {% endif %}">
+                        {{ form.username.label(class_="col-lg-3 control-label") }}
+                        <div class="col-lg-8">
+                            {{ form.username(class_="form-control") }}
+                            {% for error in form.username.errors %}
+                                <p class="help-block">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group {% if form.email.errors %} has-error {% endif %}">
+                        {{ form.email.label(class_="col-lg-3 control-label") }}
+                        <div class="col-lg-8">
+                            {{ form.email(class_="form-control") }}
+                            {% for error in form.email.errors %}
+                                <p class="help-block">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group {% if form.birthdate.errors %} has-error {% endif %}">
+                        {{ form.birthdate.label(class_="col-lg-3 control-label") }}
+                        <div class="col-lg-8">
+                            {{ form.birthdate(class_="form-control", id='birthdate') }}
+                            {% for error in form.birthdate.errors %}
+                                <p class="help-block">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group {% if form.password.errors %} has-error {% endif %}">
+                        {{ form.password.label(class_="col-lg-3 control-label") }}
+                        <div class="col-lg-8">
+                            {{ form.password(class_="form-control") }}
+                            {% for error in form.password.errors %}
+                                <p class="help-block">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group {% if form.confirm.errors %} has-error {% endif %}">
+                        {{ form.confirm.label(class_="col-lg-3 control-label") }}
+                        <div class="col-lg-8">
+                            {{ form.confirm(class_="form-control") }}
+                            {% for error in form.confirm.errors %}
+                                <p class="help-block">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <input class="btn btn-primary" value="Save Changes" type="submit">
+                            <span></span>
+                            <a href="{{ url_for('bro.profile') }}" class="btn btn-default">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('#birthdate').datepicker({
+                endDate: '-10y'
+            });
+        });
+    </script>
+{% endblock %}

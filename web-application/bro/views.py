@@ -27,7 +27,7 @@ def signin():
 @bro.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignUpForm()
-    if request.method == "POST" and form.validate():
+    if request.method == "POST" and form.validate_for_exist():
         bro_model = Bro(username=form.username.data,
                         password=form.password.data,
                         email=form.email.data,
@@ -51,3 +51,14 @@ def signout():
 @login_required
 def profile():
     return render_template('bro/profile.html')
+
+
+@bro.route("/profile/edit", methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    form = SignUpForm(request.form, obj=current_user)
+    if request.method == "POST" and form.validate_for_exist(current_bro=current_user):
+        form.populate_obj(current_user)
+        db.session.commit()
+        flash("You profile has been successfully updated.", "info")
+    return render_template('bro/edit_profile.html', form=form)
