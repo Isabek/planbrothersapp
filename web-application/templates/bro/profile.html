@@ -4,41 +4,39 @@
 
 {% block container %}
     <div class="row">
-        <div class="row">
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="text-center">
-                    <img src="{{ url_for('static', filename='images/no-user.jpg') }}"
-                         class="avatar img-circle img-thumbnail" alt="avatar">
-                    <h6>Your profile photo</h6>
-                </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='images/no-user.jpg') }}"
+                     class="avatar img-circle img-thumbnail" alt="avatar">
+                <h6>Your profile photo</h6>
             </div>
-            <div class="col-md-8 col-xs-12">
-                <div class="col-md-10">
-                    <h3>Personal info</h3>
-                    <table class="table">
-                        <tr>
-                            <td>Username</td>
-                            <td>{{ current_user }}</td>
-                        </tr>
-                        <tbody>
-                        <tr>
-                            <td>Age</td>
-                            <td>{{ current_user.age }} years old</td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td><a href="mailto:{{ current_user.email }}">{{ current_user.email }}</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-8">
-                    <a href="#" class="btn btn-primary">Edit Profile</a>
-                    <span></span>
-                    <a href="#" class="btn btn-danger">Delete Profile</a>
-                </div>
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <div class="col-md-10">
+                <h3>Personal info</h3>
+                <table class="table">
+                    <tr>
+                        <td>Username</td>
+                        <td>{{ current_user }}</td>
+                    </tr>
+                    <tbody>
+                    <tr>
+                        <td>Age</td>
+                        <td>{{ current_user.age }} years old</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><a href="mailto:{{ current_user.email }}">{{ current_user.email }}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-8">
+                <a href="#" class="btn btn-primary">Edit Profile</a>
+                <span></span>
+                <a href="#" class="btn btn-danger">Delete Profile</a>
             </div>
         </div>
     </div>
