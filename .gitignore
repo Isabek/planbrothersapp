@@ -1,0 +1,8 @@
+### IDE folder
+.idea
+
+### Python *.pyc files
+*.pyc
+
+### Virtualenv folder
+venv
