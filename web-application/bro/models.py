@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from flask_login import UserMixin
 from flask_bcrypt import generate_password_hash, check_password_hash
@@ -49,3 +49,9 @@ class Bro(db.Model, UserMixin):
 
     def is_correct_password(self, plaintext):
         return check_password_hash(self._password, plaintext)
+
+    @property
+    def age(self):
+        today = date.today()
+        born = self.birthdate
+        return today.year - born.year - ((today.month, today.day) < (born.month, born.day))

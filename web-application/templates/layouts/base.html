@@ -39,7 +39,7 @@
                     </li>
                 {% else %}
                     <li>
-                        <a href="#"><strong>{{ current_user }}</strong></a>
+                        <a href="{{ url_for('bro.profile') }}"><strong>{{ current_user }}</strong></a>
                     </li>
                     <li>
                         <a href="{{ url_for('bro.signout') }}">Sign Out</a>

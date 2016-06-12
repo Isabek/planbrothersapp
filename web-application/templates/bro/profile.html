@@ -1,0 +1,58 @@
+{% extends 'layouts/base.html' %}
+
+{% set page_title = "Profile" %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-lg-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Profile</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center">
+                            <img alt="Bro Picture" src="{{ url_for('static', filename='images/no-user.jpg') }}"
+                                 class="img-circle img-responsive">
+                        </div>
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tr>
+                                    <td>Username</td>
+                                    <td>{{ current_user }}</td>
+                                </tr>
+                                <tbody>
+                                <tr>
+                                    <td>Age</td>
+                                    <td>{{ current_user.age }} years old</td>
+                                </tr>
+                                <tr>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td><a href="mailto:{{ current_user.email }}">{{ current_user.email }}</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a href="mailto:{{ current_user.email }}" type="button" class="btn btn-sm btn-primary">
+                        <i class="glyphicon glyphicon-envelope"></i>
+                    </a>
+                    <span class="pull-right">
+                        <a href="#" data-original-title="Edit this user" data-toggle="tooltip" type="button"
+                           class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                        <a data-original-title="Remove this user" data-toggle="tooltip" type="button"
+                           class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

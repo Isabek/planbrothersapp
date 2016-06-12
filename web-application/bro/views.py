@@ -1,7 +1,7 @@
 from bro.forms import SignInForm, SignUpForm
 from bro.models import Bro
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user, login_required
 from main.extensions import db
 
 bro = Blueprint('bro', __name__)
@@ -45,3 +45,9 @@ def signout():
     logout_user()
     flash("Bro logged out successfully", 'info')
     return redirect(url_for('frontend.index'))
+
+
+@bro.route("/profile")
+@login_required
+def profile():
+    return render_template('bro/profile.html')
