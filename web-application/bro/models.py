@@ -1,6 +1,6 @@
 from datetime import datetime, date
 
-from flask_login import UserMixin
+from flask_login import UserMixin, AnonymousUserMixin
 from flask_bcrypt import generate_password_hash, check_password_hash
 from main.extensions import db, login_manager
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -11,6 +11,11 @@ BCRYPT_LOG_ROUNDS = 12
 @login_manager.user_loader
 def get_user(bro_id):
     return Bro.query.get(int(bro_id))
+
+
+class AnonymousBro(AnonymousUserMixin):
+    def __init__(self):
+        self.id = 0
 
 
 class Bro(db.Model, UserMixin):

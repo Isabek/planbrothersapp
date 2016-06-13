@@ -1,0 +1,30 @@
+{% extends 'layouts/base.html' %}
+
+{% set page_title = "List Bros" %}
+
+{% block container %}
+    <div class="row list-group">
+        {% for bro in bros %}
+            <div class="col-xs-6 col-lg-3">
+                <div class="thumbnail">
+                    <img src="{{ url_for('static', filename='images/no-user.jpg') }}"
+                         class="img-circle img-thumbnail">
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">{{ bro }}</h4>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <a class="btn btn-primary btn-sm pull-left" href="">Add Bro</a>
+                                <a class="btn btn-success btn-sm pull-right" href="">Add Best Bro</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class="lead text-center">
+                There are any bros in the Bro Social Network. You can sign up <a
+                    href="{{ url_for('bro.signup') }}">here.</a>
+            </p>
+        {% endfor %}
+    </div>
+{% endblock %}

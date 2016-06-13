@@ -74,3 +74,13 @@ def delete_profile():
         flash("You profile has been successfully deleted", "info")
         return redirect(url_for('frontend.index'))
     return render_template('bro/delete_profile.html', form=form)
+
+
+@bro.route("/bros")
+def list_bros():
+    query = Bro.query
+    if current_user:
+        query = query.filter(Bro.id != current_user.id)
+    bros = query.all()
+
+    return render_template('bro/list_bros.html', bros=bros)
