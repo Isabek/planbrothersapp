@@ -16,6 +16,8 @@
 
 <body>
 
+{% set current_url = request.url_rule.endpoint %}
+
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -31,17 +33,17 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 {% if not current_user.is_authenticated %}
-                    <li>
+                    <li class="{% if current_url == 'bro.signin' %} active {% endif %}">
                         <a href="{{ url_for('bro.signin') }}">Sign In</a>
                     </li>
-                    <li>
+                    <li class="{% if current_url == 'bro.signup' %} active {% endif %}">
                         <a href="{{ url_for('bro.signup') }}">Sign Up</a>
                     </li>
                 {% else %}
-                    <li>
+                    <li class="{% if current_url == 'bro.profile' %} active {% endif %}">
                         <a href="{{ url_for('bro.profile') }}"><strong>{{ current_user }}</strong></a>
                     </li>
-                    <li>
+                    <li class="{% if current_url == 'bro.signout' %} active {% endif %}">
                         <a href="{{ url_for('bro.signout') }}">Sign Out</a>
                     </li>
                 {% endif %}
