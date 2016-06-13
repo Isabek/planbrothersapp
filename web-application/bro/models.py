@@ -4,6 +4,7 @@ from flask_login import UserMixin, AnonymousUserMixin
 from flask_bcrypt import generate_password_hash, check_password_hash
 from main.extensions import db, login_manager
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import relationship
 
 BCRYPT_LOG_ROUNDS = 12
 
@@ -18,6 +19,12 @@ class AnonymousBro(AnonymousUserMixin):
         self.id = 0
 
 
+friendship = db.Table('friendships', db.Model.metadata,
+                      db.Column('bro_id', db.Integer, db.ForeignKey('bros.id')),
+                      db.Column('friend_id', db.Integer, db.ForeignKey('bros.id')),
+                      db.UniqueConstraint('bro_id', 'friend_id', name='unique_friendships'))
+
+
 class Bro(db.Model, UserMixin):
     __tablename__ = "bros"
 
@@ -28,6 +35,10 @@ class Bro(db.Model, UserMixin):
     registered_on = db.Column('registered_on', db.DateTime)
     birthdate = db.Column('birthday', db.DateTime)
     active = db.Column('is_active', db.Boolean, default=True)
+
+    friends = relationship('Bro', secondary=friendship,
+                           primaryjoin=id == friendship.c.bro_id,
+                           secondaryjoin=id == friendship.c.friend_id)
 
     def __init__(self, username, password, email, birthdate):
         self.username = username
@@ -61,3 +72,19 @@ class Bro(db.Model, UserMixin):
         today = date.today()
         born = self.birthdate
         return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+
+    def befriend(self, bro):
+        if not self._is_same_bro(bro) and bro not in self.friends:
+            self.friends.append(bro)
+            bro.friends.append(self)
+
+    def unfriend(self, bro):
+        if not self._is_same_bro(bro) and bro in self.friends:
+            self.friends.remove(bro)
+            bro.friends.remove(self)
+
+    def _is_same_bro(self, bro):
+        return self.id == bro.id
+
+    def is_friend(self, bro):
+        return True if bro in self.friends else False
