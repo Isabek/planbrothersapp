@@ -40,9 +40,9 @@
                 <tbody>
                 {% for bro in bros %}
                     <tr>
-                        <td>{{ bro }}</td>
+                        <td>{{ bro.username }}</td>
                         <td></td>
-                        <td class="text-center">{{ bro.friends | length }}</td>
+                        <td class="text-center">{{ bro.friends_qty }}</td>
                         {% if current_user.is_authenticated %}
                             <td>
                                 <div>

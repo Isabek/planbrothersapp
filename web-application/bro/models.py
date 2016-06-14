@@ -87,4 +87,8 @@ class Bro(db.Model, UserMixin):
         return self.id == bro.id
 
     def is_friend(self, bro):
-        return True if bro in self.friends else False
+        return True if bro.id in [friend.id for friend in self.friends] else False
+
+    @property
+    def friends_qty(self):
+        return len(self.friends)

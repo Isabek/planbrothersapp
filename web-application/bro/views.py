@@ -1,10 +1,12 @@
 from bro.forms import SignInForm, SignUpForm, DeleteForm
 from bro.models import Bro
+from bro.sort_strategy import SortStrategy
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_paginate import Pagination
 from main.extensions import db
-from sqlalchemy import desc, asc
+
+BROS_PER_PAGE = 15
 
 bro = Blueprint('bro', __name__)
 
@@ -80,23 +82,18 @@ def delete_profile():
 
 @bro.route("/bros")
 def list_bros():
-    page = int(request.args.get('page', 1))
-    sort = request.args.get('sort', '')
-    sort = sort.strip()
+    page = abs(int(request.args.get('page', 1)))
+    sort = str(request.args.get('sort', ''))
 
-    query = Bro.query
-    if current_user:
-        query = query.filter(Bro.id != current_user.id)
+    sort_strategy = SortStrategy(strategy=sort)
+    total, bros = sort_strategy.get_result(page=page, per_page=BROS_PER_PAGE)
 
-    if sort == 'name_asc':
-        query = query.order_by(asc(Bro.username))
-    elif sort == 'name_desc':
-        query = query.order_by(desc(Bro.username))
+    pagination = Pagination(page=page, total=total,
+                            search=False,
+                            per_page=BROS_PER_PAGE,
+                            css_framework='bootstrap3')
 
-    total = query.count()
-    bros = query.paginate(page=page, per_page=15).items
-    pagination = Pagination(page=page, total=total, search=False, per_page=15, css_framework='bootstrap3')
-    return render_template('bro/list_bros.html', bros=bros, pagination=pagination, sort=sort)
+    return render_template('bro/list_bros.html', bros=bros, sort=sort, pagination=pagination)
 
 
 @bro.route("/my_bros")
