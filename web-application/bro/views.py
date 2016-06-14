@@ -2,6 +2,7 @@ from bro.forms import SignInForm, SignUpForm, DeleteForm
 from bro.models import Bro
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_paginate import Pagination
 from main.extensions import db
 
 bro = Blueprint('bro', __name__)
@@ -78,12 +79,14 @@ def delete_profile():
 
 @bro.route("/bros")
 def list_bros():
+    page = int(request.args.get('page', 1))
     query = Bro.query
     if current_user:
         query = query.filter(Bro.id != current_user.id)
-    bros = query.all()
-
-    return render_template('bro/list_bros.html', bros=bros)
+    total = query.count()
+    bros = query.paginate(page=page, per_page=8).items
+    pagination = Pagination(page=page, total=total, search=False, per_page=8, css_framework='bootstrap3')
+    return render_template('bro/list_bros.html', bros=bros, pagination=pagination)
 
 
 @bro.route("/my_bros")
