@@ -94,8 +94,8 @@ def list_bros():
         query = query.order_by(desc(Bro.username))
 
     total = query.count()
-    bros = query.paginate(page=page, per_page=8).items
-    pagination = Pagination(page=page, total=total, search=False, per_page=8, css_framework='bootstrap3')
+    bros = query.paginate(page=page, per_page=15).items
+    pagination = Pagination(page=page, total=total, search=False, per_page=15, css_framework='bootstrap3')
     return render_template('bro/list_bros.html', bros=bros, pagination=pagination, sort=sort)
 
 

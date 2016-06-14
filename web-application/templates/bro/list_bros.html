@@ -2,51 +2,100 @@
 
 {% set page_title = "List Bros" %}
 
-{% block container %}
-    <form class="row list-group" method="get" action="{{ url_for('bro.list_bros') }}">
-        <div class="col-xs-6 col-lg-1 pull-right">
-            <button class="btn btn-primary pull-right">Sort</button>
-        </div>
-        <div class="col-xs-6 col-lg-2 pull-right">
-            <select name="sort" class="form-control">
-                <option value=""></option>
-                <option value="name_asc" {% if sort == 'name_asc' %} selected {% endif %}>Username [A-Z]</option>
-                <option value="name_desc" {% if sort == 'name_desc' %} selected {% endif %}>Username [Z-A]</option>
-            </select>
-        </div>
-    </form>
+{% block css %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/data-tables.bootstrap.min.css') }}">
+{% endblock %}
 
-    <div class="row list-group">
-        {% for bro in bros %}
-            <div class="col-xs-6 col-lg-3">
-                <div class="thumbnail">
-                    <img src="{{ url_for('static', filename='images/no-user.jpg') }}"
-                         class="img-circle img-thumbnail">
-                    <div class="caption">
-                        <h4 class="group inner list-group-item-heading">{{ bro }}</h4>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12">
-                                {% if current_user.is_authenticated %}
+{% set bro_name_class = 'sorting' %}
+{% if sort == 'name_asc' %}
+    {% set bro_name_class = 'sorting_asc' %}
+{% elif sort == 'name_desc' %}
+    {% set bro_name_class = 'sorting_desc' %}
+{% endif %}
+
+{% set friends_name_class = 'sorting' %}
+{% if sort == 'friends_qty_asc' %}
+    {% set friends_name_class = 'sorting_asc' %}
+{% elif sort == 'friends_qty_desc' %}
+    {% set friends_name_class = 'sorting_desc' %}
+{% endif %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-bordered dataTable">
+                <thead>
+                <tr>
+                    <th class="sortable {{ bro_name_class }}" id="name">
+                        Bro name
+                    </th>
+                    <th>Best Friend</th>
+                    <th class="sortable {{ friends_name_class }}" id="friends_qty">Friends</th>
+                    {% if current_user.is_authenticated %}
+                        <th>Actions</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for bro in bros %}
+                    <tr>
+                        <td>{{ bro }}</td>
+                        <td></td>
+                        <td class="text-center">{{ bro.friends | length }}</td>
+                        {% if current_user.is_authenticated %}
+                            <td>
+                                <div>
                                     {% if current_user.is_friend(bro) %}
-                                        <a class="btn btn-danger btn-sm pull-left"
-                                           href="{{ url_for('bro.unfriend_bro', bro_id=bro.id) }}">Unfriend</a>
+                                        <a class="btn btn-danger btn-xs"
+                                           href="{{ url_for('bro.unfriend_bro', bro_id=bro.id) }}">
+                                            <i class="fa fa-user"></i>
+                                            Unfriend
+                                        </a>
                                     {% else %}
-                                        <a class="btn btn-primary btn-sm pull-left"
-                                           href="{{ url_for('bro.friend_bro', bro_id=bro.id) }}">Add Bro</a>
+                                        <a class="btn btn-info btn-xs"
+                                           href="{{ url_for('bro.friend_bro', bro_id=bro.id) }}">
+                                            <i class="fa fa-user"></i>
+                                            Add Friend
+                                        </a>
                                     {% endif %}
-                                {% endif %}
-                                <a class="btn btn-success btn-sm pull-right" href="">Add Best Bro</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% else %}
-            <p class="lead text-center">
-                There are any bros in the Bro Social Network.
-            </p>
-        {% endfor %}
+                                </div>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            There are any bros in the Bro Social Network.
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <form id="sortable" method="get">
+                <input name="page" value="{{ pagination.page }}" type="hidden">
+                <input name="sort" id="sort" type="hidden">
+            </form>
+        </div>
     </div>
     {{ pagination.links }}
+{% endblock %}
 
+{% block js %}
+    {{ super() }}
+    <script>
+        $(function () {
+            var sort_strategy = '_asc';
+            $('.sortable').on('click', function () {
+                var id = $(this).attr('id');
+                if ($(this).hasClass('sorting_asc')) {
+                    sort_strategy = '_desc';
+                }
+
+                var sort = id + sort_strategy;
+                $('#sort').attr('value', sort);
+                $('#sortable').submit();
+            });
+        });
+    </script>
 {% endblock %}
