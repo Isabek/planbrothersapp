@@ -86,6 +86,13 @@ def list_bros():
     return render_template('bro/list_bros.html', bros=bros)
 
 
+@bro.route("/my_bros")
+@login_required
+def my_bros():
+    bros = current_user.friends
+    return render_template('bro/my_bros.html', bros=bros)
+
+
 @bro.route('/bros/friend/<int:bro_id>')
 @login_required
 def friend_bro(bro_id):
