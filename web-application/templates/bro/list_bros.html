@@ -21,6 +21,13 @@
     {% set friends_name_class = 'sorting_desc' %}
 {% endif %}
 
+{% set best_friend_name_class = 'sorting' %}
+{% if sort == 'best_friend_asc' %}
+    {% set best_friend_name_class = 'sorting_asc' %}
+{% elif sort == 'best_friend_desc' %}
+    {% set best_friend_name_class = 'sorting_desc' %}
+{% endif %}
+
 {% block container %}
     <div class="row">
         <div class="col-lg-12">
@@ -30,7 +37,7 @@
                     <th class="sortable {{ bro_name_class }}" id="name">
                         Bro name
                     </th>
-                    <th>Best Friend</th>
+                    <th class="sortable {{ best_friend_name_class }}" id="best_friend">Best Friend</th>
                     <th class="sortable {{ friends_name_class }}" id="friends_qty">Friends</th>
                     {% if current_user.is_authenticated %}
                         <th width="220">Actions</th>
@@ -38,42 +45,46 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for bro in bros %}
+                {% for obj in result %}
                     <tr>
-                        <td>{{ bro.username }}</td>
-                        <td></td>
-                        <td class="text-center">{{ bro.friends_qty }}</td>
+                        <td>{{ obj.bro.username }}</td>
+                        <td>
+                            {% if obj.bro.best_friend %}
+                                {{ obj.bro.best_friend }}
+                            {% endif %}
+                        </td>
+                        <td class="text-center">{{ obj.bro.friends_qty }}</td>
                         {% if current_user.is_authenticated %}
                             <td>
                                 <div>
-                                    {% if current_user.is_same_bro(bro) %}
+                                    {% if current_user.is_same_bro(obj.bro) %}
                                         <span class="label label-success">You</span>
-                                    {% elif current_user.is_friend(bro) %}
+                                    {% elif current_user.is_friend(obj.bro) %}
                                         <a class="btn btn-danger btn-xs"
-                                           href="{{ url_for('bro.unfriend_bro', bro_id=bro.id) }}">
+                                           href="{{ url_for('bro.unfriend_bro', bro_id=obj.bro.id) }}">
                                             <i class="fa fa-user"></i>
                                             Unfriend
                                         </a>
                                     {% else %}
-                                        {% if current_user.best_friend and current_user.best_friend.id == bro.id %}
+                                        {% if current_user.best_friend and current_user.best_friend.id == obj.bro.id %}
                                             <a class="btn btn-danger btn-xs"
-                                               href="{{ url_for('bro.remove_best_friend', bro_id=bro.id) }}">
+                                               href="{{ url_for('bro.remove_best_friend', bro_id=obj.bro.id) }}">
                                                 <i class="fa fa-user"></i>
                                                 Delete Best Friend
                                             </a>
                                         {% else %}
                                             {% if not current_user.best_friend %}
                                                 <a class="btn btn-primary btn-xs"
-                                                   href="{{ url_for('bro.best_friend_bro', bro_id=bro.id) }}">
+                                                   href="{{ url_for('bro.best_friend_bro', bro_id=obj.bro.id) }}">
                                                     <i class="fa fa-user"></i>
                                                     Make Best Friend
                                                 </a>
-                                                <a class="btn btn-info btn-xs"
-                                                   href="{{ url_for('bro.friend_bro', bro_id=bro.id) }}">
-                                                    <i class="fa fa-user"></i>
-                                                    Add Friend
-                                                </a>
                                             {% endif %}
+                                            <a class="btn btn-info btn-xs"
+                                               href="{{ url_for('bro.friend_bro', bro_id=obj.bro.id) }}">
+                                                <i class="fa fa-user"></i>
+                                                Add Friend
+                                            </a>
                                         {% endif %}
                                     {% endif %}
                                 </div>

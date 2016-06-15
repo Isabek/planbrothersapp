@@ -103,8 +103,6 @@ class Bro(db.Model, UserMixin):
             self.best_friend = None
             bro.best_friend = None
 
-            print "Hehehe"
-
     def is_same_bro(self, bro):
         return self.id == bro.id
 

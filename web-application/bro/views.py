@@ -86,14 +86,14 @@ def list_bros():
     sort = str(request.args.get('sort', ''))
 
     sort_strategy = SortStrategy(strategy=sort)
-    total, bros = sort_strategy.get_result(page=page, per_page=BROS_PER_PAGE)
+    total, result = sort_strategy.get_result(page=page, per_page=BROS_PER_PAGE)
 
     pagination = Pagination(page=page, total=total,
                             search=False,
                             per_page=BROS_PER_PAGE,
                             css_framework='bootstrap3')
 
-    return render_template('bro/list_bros.html', bros=bros, sort=sort, pagination=pagination)
+    return render_template('bro/list_bros.html', result=result, sort=sort, pagination=pagination)
 
 
 @bro.route("/my_bros")
