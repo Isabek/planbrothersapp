@@ -26,3 +26,11 @@
 .main-center > h3 {
     text-align: center;
 }
+
+.row > div > .alert {
+    padding: 8px !important;
+}
+
+.alert > ul {
+    list-style-type: none;
+}
