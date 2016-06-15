@@ -13,4 +13,4 @@ class DevelopConfig(Config):
     DEBUG = True
     ASSETS_DEBUG = True
     SQLALCHEMY_ECHO = True
-    SQLALCHEMY_TRACK_MODIFICATIONS = not True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
