@@ -1,5 +1,13 @@
 # Planbrothers Test Exercise
 
+## Creating DB on Postgres
+
+```sh
+$ psql -U postgres
+postgres=# CREATE USER root WITH PASSWORD 'root';
+postgres=#  CREATE DATABASE bro_db OWNER root;
+```
+
 ## Running Locally
 
 ```sh
