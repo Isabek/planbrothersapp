@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html' %}
+
+{% set page_title = "Profile" %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='images/no-user.jpg') }}"
+                     class="avatar img-circle img-thumbnail" alt="avatar">
+                <h6>Your profile photo</h6>
+            </div>
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <div class="col-md-10">
+                <h3>Personal info</h3>
+                <table class="table">
+                    <tr>
+                        <td>Username</td>
+                        <td>{{ bro }}</td>
+                    </tr>
+                    <tbody>
+                    <tr>
+                        <td>Age</td>
+                        <td>{{ bro.age }} years old</td>
+                    </tr>
+                    <tr>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><a href="mailto:{{ bro.email }}">{{ bro.email }}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-8">
+                {% if current_user.is_authenticated %}
+                    <div>
+                        {% if current_user.is_same_bro(bro) %}
+                            <a href="{{ url_for('bro.edit_profile') }}" class="btn btn-primary">Edit Profile</a>
+                            <span></span>
+                            <a href="{{ url_for('bro.delete_profile') }}" class="btn btn-danger">Delete Profile</a>
+                        {% elif current_user.is_friend(bro) %}
+                            <a class="btn btn-danger"
+                               href="{{ url_for('bro.unfriend_bro', bro_id=bro.id) }}">
+                                <i class="fa fa-user"></i>
+                                Unfriend
+                            </a>
+                        {% else %}
+                            {% if current_user.best_friend and current_user.best_friend.id == bro.id %}
+                                <a class="btn btn-danger"
+                                   href="{{ url_for('bro.remove_best_friend', bro_id=bro.id) }}">
+                                    <i class="fa fa-user"></i>
+                                    Delete Best Friend
+                                </a>
+                            {% else %}
+                                {% if not current_user.best_friend %}
+                                    <a class="btn btn-primary"
+                                       href="{{ url_for('bro.best_friend_bro', bro_id=bro.id) }}">
+                                        <i class="fa fa-user"></i>
+                                        Make Best Friend
+                                    </a>
+                                {% endif %}
+                                <a class="btn btn-info"
+                                   href="{{ url_for('bro.friend_bro', bro_id=bro.id) }}">
+                                    <i class="fa fa-user"></i>
+                                    Add Friend
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

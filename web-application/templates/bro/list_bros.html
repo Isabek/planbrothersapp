@@ -47,10 +47,12 @@
                 <tbody>
                 {% for obj in result %}
                     <tr>
-                        <td>{{ obj.bro.username }}</td>
+                        <td>
+                            <a href="{{ url_for('bro.bro_profile', bro_id=obj.bro.id) }}">{{ obj.bro.username }}</a>
+                        </td>
                         <td>
                             {% if obj.bro.best_friend %}
-                                {{ obj.bro.best_friend }}
+                                <a href="{{ url_for('bro.bro_profile', bro_id=obj.bro.best_friend.id) }}">{{ obj.bro.best_friend }}</a>
                             {% endif %}
                         </td>
                         <td class="text-center">{{ obj.bro.friends_qty }}</td>

@@ -96,6 +96,15 @@ def list_bros():
     return render_template('bro/list_bros.html', result=result, sort=sort, pagination=pagination)
 
 
+@bro.route('/bros/<int:bro_id>')
+def bro_profile(bro_id):
+    bro_model = Bro.query.get(bro_id)
+    if not bro_model:
+        flash("Bro doesn't exist", 'error')
+        return redirect(url_for('bro.list_bros'))
+    return render_template('bro/bro_profile.html', bro=bro_model)
+
+
 @bro.route('/bros/friend/<int:bro_id>')
 @login_required
 def friend_bro(bro_id):
