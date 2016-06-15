@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from flask import Flask
+from flask import Flask, render_template
 
 
 class Base(Flask):
@@ -19,8 +19,14 @@ class Base(Flask):
         self.configure_extensions()
         self.configure_login_manager()
 
-    def configure_error_handlers(self):
-        pass
+    def configure_error_handlers(app):
+        @app.errorhandler(404)
+        def page_not_found(error):
+            return render_template('error/404.html'), 404
+
+        @app.errorhandler(500)
+        def page_not_found(error):
+            return render_template('error/500.html'), 500
 
     def configure_database(self):
         pass
