@@ -21,7 +21,7 @@ def app_factory(environment, app_name):
 if __name__ == '__main__':
     manager = Manager(app_factory)
     manager.add_command('db', MigrateCommand)
-    manager.add_command('runserver', Server(host='0.0.0.0'))
+    manager.add_command('runserver', Server(host='0.0.0.0', port=os.environ.get('PORT', 5000)))
     manager.add_option("-n", "--name", dest="app_name", required=False, default='default')
     manager.add_option("-e", "--environment", dest="environment", required=False, default='development')
     manager.run()
