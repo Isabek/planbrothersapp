@@ -38,12 +38,6 @@
                 <li class="{% if current_url == 'bro.list_bros' %} active {% endif %}">
                     <a href="{{ url_for('bro.list_bros') }}">Bros</a>
                 </li>
-
-                {% if current_user.is_authenticated %}
-                    <li class="{% if current_url == 'bro.my_bros' %} active {% endif %}">
-                        <a href="{{ url_for('bro.my_bros') }}">My Bros</a>
-                    </li>
-                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if not current_user.is_authenticated %}
