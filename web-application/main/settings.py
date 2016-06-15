@@ -14,3 +14,16 @@ class DevelopConfig(Config):
     ASSETS_DEBUG = True
     SQLALCHEMY_ECHO = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+class HerokuConfig(Config):
+    DEBUG = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
+
+config = {
+    'default': Config,
+    'development': DevelopConfig,
+    'heroku': HerokuConfig
+}
