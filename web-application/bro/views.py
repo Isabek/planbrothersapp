@@ -133,3 +133,36 @@ def unfriend_bro(bro_id):
     db.session.commit()
     flash("Bro has been successfully unfriended", "info")
     return redirect(url_for('bro.list_bros'))
+
+
+@bro.route('/bros/best_friend/<int:bro_id>')
+@login_required
+def best_friend_bro(bro_id):
+    bro_model = Bro.query.get(bro_id)
+
+    if not bro_model:
+        flash("Bro doesn't exist", 'error')
+        return redirect(url_for('bro.list_bros'))
+
+    if current_user.id == bro_model.id:
+        flash("Are you sure? :)", "error")
+        return redirect(url_for('bro.list_bros'))
+
+    current_user.add_best_friend(bro_model)
+    db.session.commit()
+    flash("Bro has been successfully added as a best friend", "info")
+    return redirect(url_for('bro.list_bros'))
+
+
+@bro.route("/bros/remove_best_friend/<int:bro_id>")
+@login_required
+def remove_best_friend(bro_id):
+    bro_model = Bro.query.get(bro_id)
+    if not bro_model:
+        flash("Bro doesn't exist", 'error')
+        return redirect(url_for('bro.list_bros'))
+
+    current_user.remove_best_friend(bro_model)
+    db.session.commit()
+    flash("Best Bro has been successfully unfriended", "info")
+    return redirect(url_for('bro.list_bros'))

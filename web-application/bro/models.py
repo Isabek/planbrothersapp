@@ -3,8 +3,9 @@ from datetime import datetime, date
 from flask_login import UserMixin, AnonymousUserMixin
 from flask_bcrypt import generate_password_hash, check_password_hash
 from main.extensions import db, login_manager
+from sqlalchemy import and_
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 BCRYPT_LOG_ROUNDS = 12
 
@@ -35,6 +36,12 @@ class Bro(db.Model, UserMixin):
     registered_on = db.Column('registered_on', db.DateTime)
     birthdate = db.Column('birthday', db.DateTime)
     active = db.Column('is_active', db.Boolean, default=True)
+    best_friend_id = db.Column(db.Integer, db.ForeignKey('bros.id'))
+    best_friend = relationship('Bro',
+                               uselist=False,
+                               remote_side=[id],
+                               post_update=True
+                               )
 
     friends = relationship('Bro', secondary=friendship,
                            primaryjoin=id == friendship.c.bro_id,
@@ -74,16 +81,31 @@ class Bro(db.Model, UserMixin):
         return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
     def befriend(self, bro):
-        if not self._is_same_bro(bro) and bro not in self.friends:
+        if not self.is_same_bro(bro) and bro not in self.friends:
             self.friends.append(bro)
             bro.friends.append(self)
 
     def unfriend(self, bro):
-        if not self._is_same_bro(bro) and bro in self.friends:
+        if not self.is_same_bro(bro) and bro in self.friends:
             self.friends.remove(bro)
             bro.friends.remove(self)
 
-    def _is_same_bro(self, bro):
+    def are_best_friends(self, bro):
+        return self.best_friend == bro
+
+    def add_best_friend(self, bro):
+        if not self.are_best_friends(bro):
+            self.best_friend = bro
+            bro.best_friend = self
+
+    def remove_best_friend(self, bro):
+        if self.are_best_friends(bro):
+            self.best_friend = None
+            bro.best_friend = None
+
+            print "Hehehe"
+
+    def is_same_bro(self, bro):
         return self.id == bro.id
 
     def is_friend(self, bro):

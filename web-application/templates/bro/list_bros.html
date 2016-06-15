@@ -33,7 +33,7 @@
                     <th>Best Friend</th>
                     <th class="sortable {{ friends_name_class }}" id="friends_qty">Friends</th>
                     {% if current_user.is_authenticated %}
-                        <th>Actions</th>
+                        <th width="220">Actions</th>
                     {% endif %}
                 </tr>
                 </thead>
@@ -46,18 +46,35 @@
                         {% if current_user.is_authenticated %}
                             <td>
                                 <div>
-                                    {% if current_user.is_friend(bro) %}
+                                    {% if current_user.is_same_bro(bro) %}
+                                        <span class="label label-success">You</span>
+                                    {% elif current_user.is_friend(bro) %}
                                         <a class="btn btn-danger btn-xs"
                                            href="{{ url_for('bro.unfriend_bro', bro_id=bro.id) }}">
                                             <i class="fa fa-user"></i>
                                             Unfriend
                                         </a>
                                     {% else %}
-                                        <a class="btn btn-info btn-xs"
-                                           href="{{ url_for('bro.friend_bro', bro_id=bro.id) }}">
-                                            <i class="fa fa-user"></i>
-                                            Add Friend
-                                        </a>
+                                        {% if current_user.best_friend and current_user.best_friend.id == bro.id %}
+                                            <a class="btn btn-danger btn-xs"
+                                               href="{{ url_for('bro.remove_best_friend', bro_id=bro.id) }}">
+                                                <i class="fa fa-user"></i>
+                                                Delete Best Friend
+                                            </a>
+                                        {% else %}
+                                            {% if not current_user.best_friend %}
+                                                <a class="btn btn-primary btn-xs"
+                                                   href="{{ url_for('bro.best_friend_bro', bro_id=bro.id) }}">
+                                                    <i class="fa fa-user"></i>
+                                                    Make Best Friend
+                                                </a>
+                                                <a class="btn btn-info btn-xs"
+                                                   href="{{ url_for('bro.friend_bro', bro_id=bro.id) }}">
+                                                    <i class="fa fa-user"></i>
+                                                    Add Friend
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </td>
