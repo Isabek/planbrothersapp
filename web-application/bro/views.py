@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask_paginate import Pagination
 from main.extensions import db
 
-BROS_PER_PAGE = 15
+BROS_PER_PAGE = 12
 
 bro = Blueprint('bro', __name__)
 
