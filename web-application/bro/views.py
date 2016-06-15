@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_paginate import Pagination
 from main.extensions import db
-from main.utils import current_user_exists
+from main.utils import current_user_exists, redirect_url
 
 BROS_PER_PAGE = 12
 
@@ -114,16 +114,16 @@ def friend_bro(bro_id):
     bro_model = Bro.query.get(bro_id)
     if not bro_model:
         flash("Bro doesn't exist", 'error')
-        return redirect(url_for('bro.list_bros'))
+        return redirect(redirect_url('bro.list_bros'))
 
     if current_user.id == bro_model.id:
         flash("Are you sure? :)", "error")
-        return redirect(url_for('bro.list_bros'))
+        return redirect(redirect_url('bro.list_bros'))
 
     current_user.befriend(bro_model)
     db.session.commit()
     flash("Bro has been successfully added as a friend", "info")
-    return redirect(url_for('bro.list_bros'))
+    return redirect(redirect_url('bro.list_bros'))
 
 
 @bro.route("/bros/unfriend/<int:bro_id>")
@@ -132,12 +132,12 @@ def unfriend_bro(bro_id):
     bro_model = Bro.query.get(bro_id)
     if not bro_model:
         flash("Bro doesn't exist", 'error')
-        return redirect(url_for('bro.list_bros'))
+        return redirect(redirect_url('bro.list_bros'))
 
     current_user.unfriend(bro_model)
     db.session.commit()
     flash("Bro has been successfully unfriended", "info")
-    return redirect(url_for('bro.list_bros'))
+    return redirect(redirect_url('bro.list_bros'))
 
 
 @bro.route('/bros/best_friend/<int:bro_id>')
@@ -147,16 +147,16 @@ def best_friend_bro(bro_id):
 
     if not bro_model:
         flash("Bro doesn't exist", 'error')
-        return redirect(url_for('bro.list_bros'))
+        return redirect(redirect_url('bro.list_bros'))
 
     if current_user.id == bro_model.id:
         flash("Are you sure? :)", "error")
-        return redirect(url_for('bro.list_bros'))
+        return redirect(redirect_url('bro.list_bros'))
 
     current_user.add_best_friend(bro_model)
     db.session.commit()
     flash("Bro has been successfully added as a best friend", "info")
-    return redirect(url_for('bro.list_bros'))
+    return redirect(redirect_url('bro.list_bros'))
 
 
 @bro.route("/bros/remove_best_friend/<int:bro_id>")
@@ -165,9 +165,9 @@ def remove_best_friend(bro_id):
     bro_model = Bro.query.get(bro_id)
     if not bro_model:
         flash("Bro doesn't exist", 'error')
-        return redirect(url_for('bro.list_bros'))
+        return redirect(redirect_url('bro.list_bros'))
 
     current_user.remove_best_friend(bro_model)
     db.session.commit()
     flash("Best Bro has been successfully unfriended", "info")
-    return redirect(url_for('bro.list_bros'))
+    return redirect(redirect_url('bro.list_bros'))
