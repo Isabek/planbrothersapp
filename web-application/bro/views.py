@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_paginate import Pagination
 from main.extensions import db
+from main.utils import current_user_exists
 
 BROS_PER_PAGE = 12
 
@@ -12,6 +13,7 @@ bro = Blueprint('bro', __name__)
 
 
 @bro.route('/signin', methods=['GET', 'POST'])
+@current_user_exists
 def signin():
     form = SignInForm()
     if request.method == "POST" and form.validate():
@@ -29,6 +31,7 @@ def signin():
 
 
 @bro.route('/signup', methods=['GET', 'POST'])
+@current_user_exists
 def signup():
     form = SignUpForm()
     if request.method == "POST" and form.validate_for_exist():
