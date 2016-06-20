@@ -45,45 +45,45 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for obj in result %}
+                {% for bro in result %}
                     <tr>
                         <td>
-                            <a href="{{ url_for('bro.bro_profile', bro_id=obj.bro.id) }}">{{ obj.bro.username }}</a>
+                            <a href="{{ url_for('bro.bro_profile', bro_id=bro.id) }}">{{ bro.username }}</a>
                         </td>
                         <td>
-                            {% if obj.bro.best_friend %}
-                                <a href="{{ url_for('bro.bro_profile', bro_id=obj.bro.best_friend.id) }}">{{ obj.bro.best_friend }}</a>
+                            {% if bro.best_friend %}
+                                <a href="{{ url_for('bro.bro_profile', bro_id=bro.best_friend.id) }}">{{ bro.best_friend }}</a>
                             {% endif %}
                         </td>
-                        <td class="text-center">{{ obj.bro.friends_qty }}</td>
+                        <td class="text-center">{{ bro.friends_qty }}</td>
                         {% if current_user.is_authenticated %}
                             <td>
                                 <div>
-                                    {% if current_user.is_same_bro(obj.bro) %}
+                                    {% if current_user.is_same_bro(bro) %}
                                         <span class="label label-success">You</span>
-                                    {% elif current_user.is_friend(obj.bro) %}
+                                    {% elif current_user.is_friend(bro) %}
                                         <a class="btn btn-danger btn-xs"
-                                           href="{{ url_for('bro.unfriend_bro', bro_id=obj.bro.id) }}">
+                                           href="{{ url_for('bro.unfriend_bro', bro_id=bro.id) }}">
                                             <i class="fa fa-user"></i>
                                             Unfriend
                                         </a>
                                     {% else %}
-                                        {% if current_user.best_friend and current_user.best_friend.id == obj.bro.id %}
-                                            <a class="btn btn-danger btn-xs"
-                                               href="{{ url_for('bro.remove_best_friend', bro_id=obj.bro.id) }}">
+                                        {% if current_user.best_friend and current_user.best_friend.id == bro.id %}
+                                            <a class="btn btn-success btn-xs"
+                                               href="{{ url_for('bro.remove_best_friend', bro_id=bro.id) }}">
                                                 <i class="fa fa-user"></i>
                                                 Delete Best Friend
                                             </a>
                                         {% else %}
                                             {% if not current_user.best_friend %}
                                                 <a class="btn btn-primary btn-xs"
-                                                   href="{{ url_for('bro.best_friend_bro', bro_id=obj.bro.id) }}">
+                                                   href="{{ url_for('bro.best_friend_bro', bro_id=bro.id) }}">
                                                     <i class="fa fa-user"></i>
                                                     Make Best Friend
                                                 </a>
                                             {% endif %}
                                             <a class="btn btn-info btn-xs"
-                                               href="{{ url_for('bro.friend_bro', bro_id=obj.bro.id) }}">
+                                               href="{{ url_for('bro.friend_bro', bro_id=bro.id) }}">
                                                 <i class="fa fa-user"></i>
                                                 Add Friend
                                             </a>

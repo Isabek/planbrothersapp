@@ -9,7 +9,7 @@ from sqlalchemy.orm import aliased
 class OrderBy(object):
     @staticmethod
     def get_bros():
-        return db.session.query(Bro)
+        return db.session.query(Bro).order_by(Bro.id)
 
     @staticmethod
     def get_bros_friends_qty():
@@ -99,6 +99,6 @@ class SortStrategy(object):
 
         result = []
         for bro in per_page_bros:
-            result.append({'bro': Bro.query.get(bro.id)})
+            result.append(Bro.query.get(bro.id))
 
         return total, result
