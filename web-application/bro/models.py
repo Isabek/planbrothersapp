@@ -111,4 +111,4 @@ class Bro(db.Model, UserMixin):
 
     @property
     def friends_qty(self):
-        return len(self.friends)
+        return len(self.friends) + (1 if self.best_friend else 0)
