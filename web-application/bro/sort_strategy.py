@@ -8,6 +8,10 @@ from sqlalchemy.orm import aliased
 
 class OrderBy(object):
     @staticmethod
+    def get_all_bros():
+        return db.session.query(Bro)
+
+    @staticmethod
     def get_bros():
         return db.session.query(Bro).order_by(Bro.id)
 
@@ -34,13 +38,13 @@ class OrderBy(object):
 
 class OrderByNameAsc(OrderBy):
     def execute(self):
-        bros = super(OrderByNameAsc, self).get_bros()
+        bros = super(OrderByNameAsc, self).get_all_bros()
         return bros.order_by(asc(Bro.username))
 
 
 class OrderByNameDesc(OrderBy):
     def execute(self):
-        bros = super(OrderByNameDesc, self).get_bros()
+        bros = super(OrderByNameDesc, self).get_all_bros()
         return bros.order_by(desc(Bro.username))
 
 
