@@ -3,21 +3,8 @@ import os
 from commands.populate_bros import PopulateBrosCommand
 from flask_script import Manager, Server
 
-from main.settings import config
-from main.app import App
-from frontend.views import frontend
+from main.app import app_factory
 from flask_migrate import MigrateCommand
-from bro.views import bro
-
-
-def app_factory(environment, app_name):
-    app = App(app_name)
-    app.configure(config=config[environment])
-    app.secret_key = os.urandom(24)
-    app.add_blueprint_list((frontend, bro,))
-    app.setup()
-    return app
-
 
 if __name__ == '__main__':
     manager = Manager(app_factory)
