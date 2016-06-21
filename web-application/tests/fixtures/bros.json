@@ -21,6 +21,56 @@
         "birthday": "2006-06-09",
         "is_active": true,
         "best_friend_id": null
+      },
+      {
+        "id": 3,
+        "username": "Nightmare",
+        "email": "nightmare@test.com",
+        "password": "$2b$12$N0egn.ckRVN9ZGj19dD.cu4PqEveK96cXPwGVFbyvuaxPxjBi9gRS",
+        "registered_on": "2016-06-15",
+        "birthday": "2006-06-08",
+        "is_active": true,
+        "best_friend_id": null
+      },
+      {
+        "id": 4,
+        "username": "Neo",
+        "email": "neo@test.com",
+        "password": "$2b$12$kr4ED60eewrPmLCYgvg6deJ9RPSM5w2wnVTa1LQJJSSDu6WZ9E74G",
+        "registered_on": "2016-06-15",
+        "birthday": "2006-06-08",
+        "is_active": true,
+        "best_friend_id": null
+      },
+      {
+        "id": 5,
+        "username": "Doctor",
+        "email": "doctor@test.com",
+        "password": "$2b$12$U0NMqaDqKgHx0uweFmsvZuusoRgpVgGFjwBHwqb6XBg3/4vKUzdpe",
+        "registered_on": "2016-06-15",
+        "birthday": "2006-06-08",
+        "is_active": true,
+        "best_friend_id": null
+      },
+      {
+        "id": 6,
+        "username": "Demon",
+        "email": "demon@test.com",
+        "password": "$2b$12$syzjtzas4q30nRGd0MEcmOp2z3kRIjPxnC9Gx7NRITC33bOGLEZje",
+        "registered_on": "2016-06-15",
+        "birthday": "2006-06-08",
+        "is_active": true,
+        "best_friend_id": null
+      },
+      {
+        "id": 7,
+        "username": "Cyborg",
+        "email": "cyborg@test.com",
+        "password": "$2b$12$ekYfeOeDQy2kRbLM0Wxedehuf0GHfW7Xp8.oLSwUKijDzV3FAjX9C",
+        "registered_on": "2016-06-15",
+        "birthday": "2006-06-08",
+        "is_active": true,
+        "best_friend_id": null
       }
     ]
   }
