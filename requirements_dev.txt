@@ -1,0 +1,5 @@
+-r requirements.txt
+Flask-Fixtures==0.3.7
+py==1.4.31
+pytest==2.9.2
+pytest-flask==0.10.0
