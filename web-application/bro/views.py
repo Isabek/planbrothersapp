@@ -48,6 +48,7 @@ def signup():
 
 
 @bro.route('/signout')
+@login_required
 def signout():
     logout_user()
     flash("Bro logged out successfully", 'info')
