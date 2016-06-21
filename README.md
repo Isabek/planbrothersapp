@@ -1,5 +1,7 @@
 # Planbrothers Test Exercise
 
+[![Travis-ci Build Status](https://travis-ci.org/Isabek/planbrothersapp.svg?branch=master)](https://travis-ci.org/Isabek/planbrothersapp)
+
 ## Creating DB on Postgres
 
 ```sh
