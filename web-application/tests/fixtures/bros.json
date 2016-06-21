@@ -1,0 +1,27 @@
+[
+  {
+    "table": "bros",
+    "records": [
+      {
+        "id": 1,
+        "username": "Great",
+        "email": "great@test.com",
+        "password": "$2b$12$AbLocnetHCC8Q0ga5WECV.wowxt5BxixYQtQsi6eoP/mCIa58hy52",
+        "registered_on": "2016-06-15",
+        "birthday": "2006-06-08",
+        "is_active": true,
+        "best_friend_id": null
+      },
+      {
+        "id": 2,
+        "username": "Knight",
+        "email": "knight@test.com",
+        "password": "$2b$12$hkMkFAfJ2WcdOdwEJXRzt.RgzsMuJUBoJ8Px./VTjmo3gvywCh5yq",
+        "registered_on": "2016-06-15",
+        "birthday": "2006-06-09",
+        "is_active": true,
+        "best_friend_id": null
+      }
+    ]
+  }
+]

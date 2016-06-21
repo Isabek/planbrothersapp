@@ -6,3 +6,6 @@
 
 ### Virtualenv folder
 venv
+
+#Unittest .cache folder
+web-application/tests/.cache
