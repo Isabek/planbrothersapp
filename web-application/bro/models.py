@@ -36,7 +36,7 @@ class Bro(db.Model, UserMixin):
     registered_on = db.Column('registered_on', db.DateTime)
     birthdate = db.Column('birthday', db.DateTime)
     active = db.Column('is_active', db.Boolean, default=True)
-    best_friend_id = db.Column(db.Integer, db.ForeignKey('bros.id'))
+    best_friend_id = db.Column(db.Integer, db.ForeignKey('bros.id', ondelete='SET NULL'))
     best_friend = relationship('Bro',
                                uselist=False,
                                remote_side=[id],
