@@ -1,11 +1,10 @@
 from datetime import datetime, date
 
-from flask_login import UserMixin, AnonymousUserMixin
 from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_login import UserMixin, AnonymousUserMixin
 from main.extensions import db, login_manager
-from sqlalchemy import and_
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 
 BCRYPT_LOG_ROUNDS = 12
 
