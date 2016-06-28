@@ -76,7 +76,7 @@ def edit_profile():
 @login_required
 def delete_profile():
     form = DeleteForm()
-    if request.method == "POST":
+    if request.method == "POST" and form.validate():
         db.session.delete(current_user)
         db.session.commit()
         flash("You profile has been successfully deleted", "info")
