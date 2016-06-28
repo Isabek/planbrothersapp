@@ -21,8 +21,8 @@ class AnonymousBro(AnonymousUserMixin):
 
 
 friendship = db.Table('friendships', db.Model.metadata,
-                      db.Column('bro_id', db.Integer, db.ForeignKey('bros.id')),
-                      db.Column('friend_id', db.Integer, db.ForeignKey('bros.id')),
+                      db.Column('bro_id', db.Integer, db.ForeignKey('bros.id', ondelete='cascade')),
+                      db.Column('friend_id', db.Integer, db.ForeignKey('bros.id', ondelete='cascade')),
                       db.UniqueConstraint('bro_id', 'friend_id', name='unique_friendships'))
 
 
