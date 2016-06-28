@@ -9,9 +9,6 @@ class SignInForm(Form):
     password = PasswordField('Password', [InputRequired()])
     remember = BooleanField('Remember me?')
 
-    def __init__(self, *args, **kwargs):
-        Form.__init__(self, *args, **kwargs)
-
 
 class SignUpForm(Form):
     username = StringField('Username', [DataRequired()])
@@ -19,9 +16,6 @@ class SignUpForm(Form):
     password = PasswordField('Password', [InputRequired(), EqualTo('confirm', message='Passwords must match')])
     confirm = PasswordField('Confirm Password', [InputRequired()])
     birthdate = DateField('Birth Date', [InputRequired()], format='%m/%d/%Y')
-
-    def __init__(self, *args, **kwargs):
-        Form.__init__(self, *args, **kwargs)
 
     def validate_for_exist(self, current_bro=None):
         rv = Form.validate(self)
@@ -45,5 +39,4 @@ class SignUpForm(Form):
 
 
 class DeleteForm(Form):
-    def __init__(self, *args, **kwargs):
-        Form.__init__(self, *args, **kwargs)
+    pass
