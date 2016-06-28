@@ -33,7 +33,7 @@ class Bro(db.Model, UserMixin):
     username = db.Column('username', db.String(60), index=True)
     email = db.Column('email', db.String(255), unique=True, index=True)
     _password = db.Column('password', db.String(255))
-    registered_on = db.Column('registered_on', db.DateTime)
+    registered_on = db.Column('registered_on', db.DateTime, default=datetime.utcnow())
     birthdate = db.Column('birthday', db.DateTime)
     active = db.Column('is_active', db.Boolean, default=True)
     best_friend_id = db.Column(db.Integer, db.ForeignKey('bros.id', ondelete='SET NULL'))
@@ -46,13 +46,6 @@ class Bro(db.Model, UserMixin):
     friends = relationship('Bro', secondary=friendship,
                            primaryjoin=id == friendship.c.bro_id,
                            secondaryjoin=id == friendship.c.friend_id)
-
-    def __init__(self, username, password, email, birthdate):
-        self.username = username
-        self.password = password
-        self.email = email
-        self.birthdate = birthdate
-        self.registered_on = datetime.utcnow()
 
     @hybrid_property
     def password(self):
