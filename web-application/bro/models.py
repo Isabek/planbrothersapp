@@ -58,8 +58,11 @@ class Bro(db.Model, UserMixin):
     def is_active(self):
         return self.active
 
-    def __repr__(self):
+    def __str__(self):
         return self.username
+
+    def __repr__(self):
+        return "<Bro username=%s>" % self.username
 
     def get_id(self):
         return unicode(self.id)
