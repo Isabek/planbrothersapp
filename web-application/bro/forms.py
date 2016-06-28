@@ -34,8 +34,7 @@ class SignUpForm(Form):
 
     @staticmethod
     def _get_bro_by_email(email):
-        bro = Bro.query.filter_by(email=email).first()
-        return bro
+        return Bro.query.filter_by(email=email).first()
 
 
 class DeleteForm(Form):
