@@ -86,16 +86,16 @@ class Bro(db.Model, UserMixin):
             self.friends.remove(bro)
             bro.friends.remove(self)
 
-    def are_best_friends(self, bro):
+    def is_best_friend_with(self, bro):
         return self.best_friend == bro
 
     def add_best_friend(self, bro):
-        if not self.are_best_friends(bro):
+        if not self.is_best_friend_with(bro):
             self.best_friend = bro
             bro.best_friend = self
 
     def remove_best_friend(self, bro):
-        if self.are_best_friends(bro):
+        if self.is_best_friend_with(bro):
             self.best_friend = None
             bro.best_friend = None
 
