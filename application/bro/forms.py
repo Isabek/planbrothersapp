@@ -1,4 +1,4 @@
-from bro.models import Bro
+from application.bro.models import Bro
 from flask_wtf import Form
 from wtforms import PasswordField, StringField, DateField, BooleanField
 from wtforms.validators import InputRequired, DataRequired, Email, EqualTo

@@ -3,7 +3,7 @@ import os
 from commands.populate_bros import PopulateBrosCommand
 from flask_script import Manager, Server
 
-from main.app import app_factory
+from application.main.app import app_factory
 from flask_migrate import MigrateCommand
 
 if __name__ == '__main__':

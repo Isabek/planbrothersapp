@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 import os
 from base import Base
-from bro.models import AnonymousBro
-from main.extensions import db, migrate, csrf_protect, login_manager
-from bro.views import bro
-from main.settings import config
+from application.bro.models import AnonymousBro
+from application.main.extensions import db, migrate, csrf_protect, login_manager
+from application.bro.views import bro
+from application.main.settings import config
 
 
 class App(Base):
@@ -23,7 +23,7 @@ class App(Base):
 
 
 def app_factory(environment, app_name):
-    app = App(app_name)
+    app = App(app_name, template_folder='application/templates', static_folder='application/static')
     app.configure(config=config[environment])
     app.secret_key = os.urandom(24)
     app.add_blueprint_list((bro,))

@@ -1,8 +1,8 @@
 import unittest
 
 from flask_fixtures import FixturesMixin
-from main.app import app_factory
-from main.extensions import db
+from application.main.app import app_factory
+from application.main.extensions import db
 
 
 class BaseTestCase(unittest.TestCase, FixturesMixin):

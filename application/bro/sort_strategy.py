@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
-from bro.models import Bro, friendship
-from main.extensions import db
+from application.bro.models import Bro, friendship
+from application.main.extensions import db
 from sqlalchemy import asc, desc, func
 from sqlalchemy.orm import aliased
 

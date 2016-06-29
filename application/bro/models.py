@@ -2,7 +2,7 @@ from datetime import datetime, date
 
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import UserMixin, AnonymousUserMixin
-from main.extensions import db, login_manager
+from application.main.extensions import db, login_manager
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 

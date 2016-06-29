@@ -1,11 +1,11 @@
-from bro.forms import SignInForm, SignUpForm, DeleteForm
-from bro.models import Bro
-from bro.sort_strategy import SortStrategy
+from application.bro.forms import SignInForm, SignUpForm, DeleteForm
+from application.bro.models import Bro
+from application.bro.sort_strategy import SortStrategy
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_paginate import Pagination
-from main.extensions import db
-from main.utils import current_user_exists, redirect_url
+from application.main.extensions import db
+from application.main.utils import current_user_exists, redirect_url
 
 BROS_PER_PAGE = 12
 

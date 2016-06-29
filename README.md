@@ -19,9 +19,9 @@ $ virtualenv venv
 $ source venv/bin/activate
 $ pip install -r requirements.txt
 
-$ python application/manage.py db upgrade
+$ python manage.py db upgrade
 
-$ python application/manage.py runserver
+$ python manage.py runserver
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
