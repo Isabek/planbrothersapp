@@ -3,7 +3,6 @@ import os
 from base import Base
 from bro.models import AnonymousBro
 from main.extensions import db, migrate, csrf_protect, login_manager
-from frontend.views import frontend
 from bro.views import bro
 from main.settings import config
 
@@ -27,6 +26,6 @@ def app_factory(environment, app_name):
     app = App(app_name)
     app.configure(config=config[environment])
     app.secret_key = os.urandom(24)
-    app.add_blueprint_list((frontend, bro,))
+    app.add_blueprint_list((bro,))
     app.setup()
     return app

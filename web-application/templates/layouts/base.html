@@ -28,12 +28,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url_for('frontend.index') }}">{{ 'Bro Social Network' }}</a>
+            <a class="navbar-brand" href="{{ url_for('bro.index') }}">{{ 'Bro Social Network' }}</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="{% if current_url == 'frontend.index' %} active {% endif %}">
-                    <a href="{{ url_for('frontend.index') }}">Home</a>
+                <li class="{% if current_url == 'bro.index' %} active {% endif %}">
+                    <a href="{{ url_for('bro.index') }}">Home</a>
                 </li>
                 <li class="{% if current_url == 'bro.list_bros' %} active {% endif %}">
                     <a href="{{ url_for('bro.list_bros') }}">Bros</a>

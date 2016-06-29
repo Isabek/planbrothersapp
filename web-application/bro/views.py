@@ -12,6 +12,11 @@ BROS_PER_PAGE = 12
 bro = Blueprint('bro', __name__)
 
 
+@bro.route('/')
+def index():
+    return render_template('bro/index.html')
+
+
 @bro.route('/signin', methods=['GET', 'POST'])
 @current_user_exists
 def signin():
@@ -22,7 +27,7 @@ def signin():
         if registered_bro and registered_bro.is_correct_password(form.password.data):
             flash("Bro logged in successfully", 'info')
             login_user(registered_bro, remember=form.remember.data)
-            return redirect(url_for('frontend.index'))
+            return redirect(url_for('bro.index'))
 
         flash("Email or Password is invalid.", "error")
         return redirect(url_for('bro.signin'))
@@ -52,7 +57,7 @@ def signup():
 def signout():
     logout_user()
     flash("Bro logged out successfully", 'info')
-    return redirect(url_for('frontend.index'))
+    return redirect(url_for('bro.index'))
 
 
 @bro.route("/profile")
@@ -80,7 +85,7 @@ def delete_profile():
         db.session.delete(current_user)
         db.session.commit()
         flash("You profile has been successfully deleted", "info")
-        return redirect(url_for('frontend.index'))
+        return redirect(url_for('bro.index'))
     return render_template('bro/delete_profile.html', form=form)
 
 
