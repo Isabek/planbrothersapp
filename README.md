@@ -25,3 +25,14 @@ $ python manage.py runserver
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
+
+## Load Fixtures
+```sh
+$ python manage.py populate_bros
+```
+
+
+## Run Tests
+```sh
+$ python manage.py test
+```
