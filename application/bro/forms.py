@@ -4,18 +4,8 @@ from wtforms import PasswordField, StringField, DateField, BooleanField
 from wtforms.validators import InputRequired, DataRequired, Email, EqualTo
 
 
-class SignInForm(Form):
-    email = StringField('Email', [InputRequired()])
-    password = PasswordField('Password', [InputRequired()])
-    remember = BooleanField('Remember me?')
-
-
-class SignUpForm(Form):
-    username = StringField('Username', [DataRequired()])
+class BaseForm(Form):
     email = StringField('Email', [Email()])
-    password = PasswordField('Password', [InputRequired(), EqualTo('confirm', message='Passwords must match')])
-    confirm = PasswordField('Confirm Password', [InputRequired()])
-    birthdate = DateField('Birth Date', [InputRequired()], format='%m/%d/%Y')
 
     def validate_for_exist(self, current_bro=None):
         rv = Form.validate(self)
@@ -35,6 +25,24 @@ class SignUpForm(Form):
     @staticmethod
     def _get_bro_by_email(email):
         return Bro.query.filter_by(email=email).first()
+
+
+class SignInForm(Form):
+    email = StringField('Email', [InputRequired()])
+    password = PasswordField('Password', [InputRequired()])
+    remember = BooleanField('Remember me?')
+
+
+class SignUpForm(BaseForm):
+    username = StringField('Username', [DataRequired()])
+    password = PasswordField('Password', [InputRequired(), EqualTo('confirm', message='Passwords must match')])
+    confirm = PasswordField('Confirm Password', [InputRequired()])
+    birthdate = DateField('Birth Date', [InputRequired()], format='%m/%d/%Y')
+
+
+class EditForm(BaseForm):
+    username = StringField('Username', [DataRequired()])
+    birthdate = DateField('Birth Date', [InputRequired()], format='%m/%d/%Y')
 
 
 class DeleteForm(Form):

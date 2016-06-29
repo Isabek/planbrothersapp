@@ -1,4 +1,4 @@
-from application.bro.forms import SignInForm, SignUpForm, DeleteForm
+from application.bro.forms import SignInForm, SignUpForm, DeleteForm, EditForm
 from application.bro.models import Bro
 from application.bro.sort_strategy import SortStrategy
 from flask import Blueprint, render_template, request, flash, redirect, url_for
@@ -69,7 +69,7 @@ def profile():
 @bro.route("/profile/edit", methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    form = SignUpForm(request.form, obj=current_user)
+    form = EditForm(request.form, obj=current_user)
     if request.method == "POST" and form.validate_for_exist(current_bro=current_user):
         form.populate_obj(current_user)
         db.session.commit()

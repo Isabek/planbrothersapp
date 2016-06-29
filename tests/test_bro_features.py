@@ -20,8 +20,12 @@ class TestBroFeatures(BaseTestCase):
     def signup(self, email, password, confirm, username, birthdate):
         return self.register('/signup', email, password, confirm, username, birthdate)
 
-    def edit(self, email, password, confirm, username, birthdate):
-        return self.register('/profile/edit', email, password, confirm, username, birthdate)
+    def edit(self, email, username, birthdate):
+        return self.client.post('/profile/edit', data=dict(
+                email=email,
+                username=username,
+                birthdate=birthdate
+            ), follow_redirects=True)
 
     def logout(self):
         return self.client.get('/signout', follow_redirects=True)
@@ -42,7 +46,7 @@ class TestBroFeatures(BaseTestCase):
     def test_bro_edit_profile(self):
         self.signup('newton@mail.test', 'test', 'test', 'Isaac Newton', '04/01/1643')
         self.login('newton@mail.test', 'test')
-        rv = self.edit('newton@mail.test', 'test', 'test', 'Giordano Bruno', '04/01/1643')
+        rv = self.edit('newton@mail.test', 'Giordano Bruno', '04/01/1643')
 
         assert 'You profile has been successfully updated.' in rv.data.decode('utf-8')
         assert 'Giordano Bruno' in rv.data.decode('utf-8')
