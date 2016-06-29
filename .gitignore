@@ -8,4 +8,4 @@
 venv
 
 #Unittest .cache folder
-web-application/tests/.cache
+application/tests/.cache
